@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">Procurando Local:</string>
+    <string name="Nome">Digite seu Nome:</string>
+    <string name="Endereco">Digite seu endereço:</string>
+    <string name="Telefone">Digite o telefone do local:</string>
+    <string name="Posicao">Digite a Posição do local desejado:</string>
+    <string name="TipoLocal">Informe o Tipo de local:</string>
+    <string name="Descricao">Informe a descrição do local desejado:</string>
+    <string name="OK">OK</string>
+
+    <string-array name="estados">
+        <item>Tipo de local</item>
+        <item>Restaurante</item>
+        <item>Lanchonete</item>
+        <item>Bar</item>
+        <item>Mercado</item>
+        <item>Mercearia</item>
+        <item>Farmácia</item>
+        <item>Hospital</item>
+        <!--<item>ES</item>-->
+        <!--<item>GO</item>-->
+        <!--<item>MA</item>-->
+        <!--<item>MT</item>-->
+        <!--<item>MS</item>-->
+        <!--<item>MG</item>-->
+        <!--<item>PA</item>-->
+        <!--<item>PB</item>-->
+        <!--<item>PR</item>-->
+        <!--<item>PE</item>-->
+        <!--<item>PI</item>-->
+        <!--<item>RJ</item>-->
+        <!--<item>RN</item>-->
+        <!--<item>RS</item>-->
+        <!--<item>RO</item>-->
+        <!--<item>RR</item>-->
+        <!--<item>SC</item>-->
+        <!--<item>SP</item>-->
+        <!--<item>SE</item>-->
+        <!--<item>TO</item>-->
+    </string-array>
+</resources>
