@@ -219,19 +219,19 @@ public class CadastroActivity extends AppCompatActivity
 //            xxPosicao.setError("Informe a posição do Local");
 //            retorno = false;
 //        }
-//        //
-//        if (EdDescricao.getText().toString().trim().length() == 0)
-//        {
-//            xxDescricao.setError("Informe a descrição do Local");
-//            retorno = false;
-//        }
-//        //
-//        if (Locais.getSelectedItemPosition() <= 0)
-//        {
-//            PopupInformacao.mostraMensagem(this, "Selecione o tipo de local");
-//            retorno = false;
-//        }
         //
+        if (EdDescricao.getText().toString().trim().length() == 0)
+        {
+            xxDescricao.setError("Informe a descrição do Local");
+            retorno = false;
+        }
+        //
+        if (Locais.getSelectedItemPosition() <= 0)
+        {
+            PopupInformacao.mostraMensagem(this, "Selecione o tipo de local");
+            retorno = false;
+        }
+
         return retorno;
     }
 

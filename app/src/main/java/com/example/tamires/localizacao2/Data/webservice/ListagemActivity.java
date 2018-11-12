@@ -54,6 +54,7 @@ public class ListagemActivity extends AppCompatActivity
             @Override
             public void onRefresh()
             {
+
                 carregaListaLocalizacao();
             }
         });
@@ -89,10 +90,9 @@ public class ListagemActivity extends AppCompatActivity
                                          TextView tvNome;
                                          TextView tvEndereco;
                                          TextView tvTelefone;
-                                         TextView tvPosicao;
+//                                         TextView tvPosicao;
                                          TextView tvDescricao;
                                          TextView Locais;
-
                                      }
 
                                      @Override
@@ -120,7 +120,7 @@ public class ListagemActivity extends AppCompatActivity
                                              viewHolder.tvNome = convertView.findViewById(R.id.tvNome);
                                              viewHolder.tvEndereco = convertView.findViewById(R.id.tvEndereco);
                                              viewHolder.tvTelefone = convertView.findViewById(R.id.tvTelefone);
-                                             viewHolder.tvPosicao = convertView.findViewById(R.id.tvPosicao);
+//                                             viewHolder.tvPosicao = convertView.findViewById(R.id.tvPosicao);
                                              viewHolder.tvDescricao = convertView.findViewById(R.id.tvDescricao);
                                              viewHolder.Locais = convertView.findViewById(R.id.Locais);
                                          }
@@ -144,8 +144,7 @@ public class ListagemActivity extends AppCompatActivity
     private void carregaListaLocalizacao()
     {
         srLocalizacao.setRefreshing(true);
-        new WebServiceControle().carregaListaLocalizacoes(this, new WebServiceControle.carregaListaLocalizacoesListener()
-        {
+        new WebServiceControle().carregaListaLocalizacoes(this, new WebServiceControle.CarregaListaLocalizacoesListener()        {
             @Override
             public void onResultOk(LocalizacoesSquidexInfo localizacoes)
             {

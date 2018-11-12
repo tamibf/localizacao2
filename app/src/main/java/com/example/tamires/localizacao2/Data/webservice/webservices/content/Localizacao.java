@@ -4,21 +4,12 @@ import java.io.Serializable;
 
 public class Localizacao implements Serializable
 {
-    private StringValue idLocal;
     private StringValue nomLocal;
     private StringValue enderecoLocal;
     private StringValue telLocal;
     private LocationIV posicao;
     private StringValue tipoLocal;
     private StringValue descLocal;
-
-    public StringValue getIdLocal() {
-        return idLocal;
-    }
-
-    public void setIdLocal(StringValue idLocal) {
-        this.idLocal = idLocal;
-    }
 
     public StringValue getNomLocal() {
         return nomLocal;

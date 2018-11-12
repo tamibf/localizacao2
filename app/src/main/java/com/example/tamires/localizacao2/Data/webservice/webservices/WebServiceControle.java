@@ -30,14 +30,14 @@ public class WebServiceControle
     private static Token token;
 
     public RequestQueue getRequestQueueInstance(Context context)
-    {
-        if (requestQueue == null)
-            requestQueue = Volley.newRequestQueue(context);
-        return requestQueue;
-    }
+{
+    if (requestQueue == null)
+        requestQueue = Volley.newRequestQueue(context);
+    return requestQueue;
+}
 
     public void carregaListaLocalizacoes(final Context context
-            , final carregaListaLocalizacoesListener carregaListaLocalizacoesListener)
+            , final CarregaListaLocalizacoesListener carregaListaLocalizacoesListener)
     {
         if (token == null)
         {
@@ -335,7 +335,7 @@ public class WebServiceControle
         public abstract void onErro();
     }
 
-    public interface carregaListaLocalizacoesListener
+    public interface CarregaListaLocalizacoesListener
     {
         public abstract void onResultOk(LocalizacoesSquidexInfo localizacoes);
 
