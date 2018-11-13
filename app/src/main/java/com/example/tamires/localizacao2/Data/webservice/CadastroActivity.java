@@ -10,6 +10,8 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Spinner;
 
+import com.example.tamires.localizacao2.Data.webservice.webservices.content.LocationIV;
+import com.example.tamires.localizacao2.Data.webservice.webservices.content.LocationValue;
 import com.example.tamires.localizacao2.R;
 import com.example.tamires.localizacao2.Data.webservice.dialogs.PopupInformacao;
 import com.example.tamires.localizacao2.Data.webservice.webservices.WebServiceControle;
@@ -30,8 +32,11 @@ public class CadastroActivity extends AppCompatActivity
     private TextInputLayout xxTelefone;
     private TextInputEditText EdTelefone;
 
-//    private TextInputLayout xxPosicao;
-//    private TextInputEditText EdPosicao;
+    private TextInputLayout xxLatitude;
+    private TextInputEditText EdLatitude;
+
+    private TextInputLayout xxLongitude;
+    private TextInputEditText EdLongitude;
 
     private TextInputLayout xxDescricao;
     private TextInputEditText EdDescricao;
@@ -60,8 +65,10 @@ public class CadastroActivity extends AppCompatActivity
         EdEndereco = findViewById(R.id.EdEndereco);
         xxTelefone = findViewById(R.id.xxTelefone);
         EdTelefone = findViewById(R.id.EdTelefone);
-//        xxPosicao = findViewById(R.id.xxPosicao);
-//        EdPosicao = findViewById(R.id.EdPosicao);
+        xxLatitude = findViewById(R.id.xxLatitude);
+        EdLatitude = findViewById(R.id.EdLatitude);
+        xxLongitude = findViewById(R.id.xxLongitude);
+        EdLongitude = findViewById(R.id.EdLongitude);
         xxDescricao = findViewById(R.id.xxDescricao);
         EdDescricao = findViewById(R.id.EdDescricao);
 
@@ -131,26 +138,47 @@ public class CadastroActivity extends AppCompatActivity
             }
         });
 
-//        EdPosicao.addTextChangedListener(new TextWatcher()
-//        {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after)
-//            {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count)
-//            {
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s)
-//            {
-//                xxPosicao.setError(null);
-//            }
-//        });
+        EdLatitude.addTextChangedListener(new TextWatcher()
+        {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after)
+            {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count)
+            {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s)
+            {
+                xxLatitude.setError(null);
+            }
+        });
+
+        EdLongitude.addTextChangedListener(new TextWatcher()
+        {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after)
+            {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count)
+            {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s)
+            {
+                xxLongitude.setError(null);
+            }
+        });
 
         EdDescricao.addTextChangedListener(new TextWatcher()
         {
@@ -213,13 +241,19 @@ public class CadastroActivity extends AppCompatActivity
             xxTelefone.setError("Informe o Telefone do Local");
             retorno = false;
         }
-        //
-//        if (EdPosicao.getText().toString().trim().length() == 0)
-//        {
-//            xxPosicao.setError("Informe a posição do Local");
-//            retorno = false;
-//        }
-        //
+
+        if (EdLatitude.getText().toString().trim().length() == 0)
+        {
+            xxLatitude.setError("Informe a posição do Local");
+            retorno = false;
+        }
+
+        if (EdLongitude.getText().toString().trim().length() == 0)
+        {
+            xxLongitude.setError("Informe a posição do Local");
+            retorno = false;
+        }
+
         if (EdDescricao.getText().toString().trim().length() == 0)
         {
             xxDescricao.setError("Informe a descrição do Local");
@@ -249,9 +283,17 @@ public class CadastroActivity extends AppCompatActivity
         localizacao.setNomLocal(new StringValue(edNome.getText().toString()));
         localizacao.setEnderecoLocal(new StringValue(EdEndereco.getText().toString()));
         localizacao.setEnderecoLocal(new StringValue(EdTelefone.getText().toString()));
-//        localizacao.setEnderecoLocal(new StringValue(EdPosicao.getText().toString()));
         localizacao.setEnderecoLocal(new StringValue(EdDescricao.getText().toString()));
         localizacao.setTipoLocal(new StringValue(Locais.getSelectedItem().toString()));
+//        LocationValue posicao = new LocationValue();
+//        LocationIV locationIV
+//                =new LocationIV
+//                (
+//                        Double.parseDouble(EdLatitude.getText().toString()),
+//                         Double.parseDouble(EdLongitude.getText().toString())
+//                );
+//        posicao.setIv(locationIV);
+//        localizacao.setPosicao(posicao);
         //
         try
         {
@@ -302,14 +344,15 @@ public class CadastroActivity extends AppCompatActivity
     {
         if(item != null)
         {
-            edNome.setText(item.getLocalizacao().getNomLocal().getIv());
-            EdEndereco.setText(item.getLocalizacao().getEnderecoLocal().getIv());
-            EdTelefone.setText(item.getLocalizacao().getTelLocal().getIv());
-//            EdPosicao.setText(item.getLocalizacao().getPosicao().getIv());
-            EdDescricao.setText(item.getLocalizacao().getDescLocal().getIv());
+            edNome.setText(item.getData().getNomLocal().getIv());
+            EdEndereco.setText(item.getData().getEnderecoLocal().getIv());
+            EdTelefone.setText(item.getData().getTelLocal().getIv());
+//            EdLatitude.setText(item.getData().getPosicao().getLatitude();
+//            EdLongitude.setText(item.getData().getPosicao().getLongitude().).;
+            EdDescricao.setText(item.getData().getDescLocal().getIv());
             for (int i = 1; i < Locais.getCount(); i++)
             {
-                if (((String) Locais.getItemAtPosition(i)).equals(item.getLocalizacao().getTipoLocal().getIv()))
+                if (((String) Locais.getItemAtPosition(i)).equals(item.getData().getTipoLocal().getIv()))
                 {
                     Locais.setSelection(i, true);
                     break;

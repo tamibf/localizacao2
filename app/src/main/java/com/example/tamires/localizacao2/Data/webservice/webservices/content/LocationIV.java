@@ -1,27 +1,27 @@
 package com.example.tamires.localizacao2.Data.webservice.webservices.content;
 
 public class LocationIV {
-    private StringValue latitude;
-    private  StringValue longitude;
+    private double latitude;
+    private  double longitude;
 
-    public LocationIV(StringValue latitude, StringValue longitude) {
+    public LocationIV(Double latitude, Double longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
     }
 
-    public StringValue getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(StringValue latitude) {
+    public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 
-    public StringValue getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(StringValue longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
 }

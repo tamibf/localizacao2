@@ -90,8 +90,6 @@ public class ListagemActivity extends AppCompatActivity
                                          TextView tvNome;
                                          TextView tvEndereco;
                                          TextView tvTelefone;
-//                                         TextView tvPosicao;
-                                         TextView tvDescricao;
                                          TextView Locais;
                                      }
 
@@ -120,20 +118,15 @@ public class ListagemActivity extends AppCompatActivity
                                              viewHolder.tvNome = convertView.findViewById(R.id.tvNome);
                                              viewHolder.tvEndereco = convertView.findViewById(R.id.tvEndereco);
                                              viewHolder.tvTelefone = convertView.findViewById(R.id.tvTelefone);
-//                                             viewHolder.tvPosicao = convertView.findViewById(R.id.tvPosicao);
-                                             viewHolder.tvDescricao = convertView.findViewById(R.id.tvDescricao);
                                              viewHolder.Locais = convertView.findViewById(R.id.Locais);
                                          }
                                          else
                                              viewHolder = (ViewHolder) convertView.getTag();
                                          //
-                                         viewHolder.tvNome.setText(item.getLocalizacao().getNomLocal().getIv());
-                                         viewHolder.tvEndereco.setText(item.getLocalizacao().getEnderecoLocal().getIv());
-                                         viewHolder.tvTelefone.setText(item.getLocalizacao().getTelLocal().getIv());
-//                                         viewHolder.tvPosicao.setText(item.getLocalizacao().getPosicao().getLatitude());
-//                                         viewHolder.tvPosicao.setText(item.getLocalizacao().getPosicao().getLongitude());
-                                         viewHolder.tvDescricao.setText(item.getLocalizacao().getTipoLocal().getIv());
-                                         viewHolder.Locais.setText(item.getLocalizacao().getDescLocal().getIv());
+                                         viewHolder.tvNome.setText(item.getData().getNomLocal() != null ? item.getData().getNomLocal().getIv() : "");
+                                         viewHolder.tvEndereco.setText(item.getData().getEnderecoLocal() != null ? item.getData().getEnderecoLocal().getIv() : "");
+                                         viewHolder.tvTelefone.setText(item.getData().getTelLocal() != null ? item.getData().getTelLocal().getIv() : "");
+                                         viewHolder.Locais.setText(item.getData().getDescLocal() != null ? item.getData().getDescLocal().getIv() : "");
                                          //
                                          return convertView;
                                      }

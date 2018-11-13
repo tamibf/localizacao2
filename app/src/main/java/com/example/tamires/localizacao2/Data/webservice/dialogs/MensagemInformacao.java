@@ -13,8 +13,8 @@ import com.example.tamires.localizacao2.R;
 
 public class MensagemInformacao extends DialogFragment
 {
-    public static final String TITULO = "br.com.datamob.controledeuniversidade.dialogs.mensageminformacao.titulo";
-    public static final String MENSAGEM = "br.com.datamob.controledeuniversidade.dialogs.mensageminformacao.mensagem";
+    public static final String TITULO = "com.example.tamires.localizacao2.Data.webservice.dialogs.mensageminformacao.titulo";
+    public static final String MENSAGEM = "com.example.tamires.localizacao2.Data.webservice.dialogs.mensageminformacao.mensagem";
 
     public MensagemInformacao()
     {}

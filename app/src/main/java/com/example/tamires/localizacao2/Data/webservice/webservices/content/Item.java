@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Item implements Serializable
 {
     private String id;
-    private Localizacao localizacao;
+    private Localizacao data;
     private Long version;
     private String created;
     private String createdBy;
@@ -22,14 +22,12 @@ public class Item implements Serializable
         this.id = id;
     }
 
-    public Localizacao getLocalizacao()
-    {
-        return localizacao;
+    public Localizacao getData() {
+        return data;
     }
 
-    public void setLocalizacao(Localizacao localizacao)
-    {
-        this.localizacao = localizacao;
+    public void setData(Localizacao data) {
+        this.data = data;
     }
 
     public Long getVersion()
