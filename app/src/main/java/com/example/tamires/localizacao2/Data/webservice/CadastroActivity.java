@@ -285,15 +285,15 @@ public class CadastroActivity extends AppCompatActivity
         localizacao.setEnderecoLocal(new StringValue(EdTelefone.getText().toString()));
         localizacao.setEnderecoLocal(new StringValue(EdDescricao.getText().toString()));
         localizacao.setTipoLocal(new StringValue(Locais.getSelectedItem().toString()));
-//        LocationValue posicao = new LocationValue();
-//        LocationIV locationIV
-//                =new LocationIV
-//                (
-//                        Double.parseDouble(EdLatitude.getText().toString()),
-//                         Double.parseDouble(EdLongitude.getText().toString())
-//                );
-//        posicao.setIv(locationIV);
-//        localizacao.setPosicao(posicao);
+        LocationValue posicao = new LocationValue();
+        LocationIV locationIV
+                =new LocationIV
+                (
+                        Double.parseDouble(EdLatitude.getText().toString()),
+                         Double.parseDouble(EdLongitude.getText().toString())
+                );
+        posicao.setIv(locationIV);
+        localizacao.setPosicao(posicao);
         //
         try
         {
@@ -344,18 +344,19 @@ public class CadastroActivity extends AppCompatActivity
     {
         if(item != null)
         {
-            edNome.setText(item.getData().getNomLocal().getIv());
-            EdEndereco.setText(item.getData().getEnderecoLocal().getIv());
-            EdTelefone.setText(item.getData().getTelLocal().getIv());
-//            EdLatitude.setText(item.getData().getPosicao().getLatitude();
-//            EdLongitude.setText(item.getData().getPosicao().getLongitude().).;
-            EdDescricao.setText(item.getData().getDescLocal().getIv());
-            for (int i = 1; i < Locais.getCount(); i++)
+            edNome.setText(item.getData().getNomLocal() != null ? item.getData().getNomLocal().getIv() : "");
+            EdEndereco.setText(item.getData().getEnderecoLocal() != null ?item.getData().getEnderecoLocal().getIv() : "");
+            EdTelefone.setText(item.getData().getTelLocal() != null ?item.getData().getTelLocal().getIv() : "");
+            EdLatitude.setText(item.getData().getPosicao() != null ?String.valueOf(item.getData().getPosicao().getIv().getLatitude()) : "");
+            EdLongitude.setText(item.getData().getPosicao() != null ?String.valueOf(item.getData().getPosicao().getIv().getLongitude()) : "");
+            EdDescricao.setText(item.getData().getDescLocal() != null ?item.getData().getDescLocal().getIv() : "");
+            if(item.getData().getTipoLocal() != null)
             {
-                if (((String) Locais.getItemAtPosition(i)).equals(item.getData().getTipoLocal().getIv()))
-                {
-                    Locais.setSelection(i, true);
-                    break;
+                for (int i = 1; i < Locais.getCount(); i++) {
+                    if (((String) Locais.getItemAtPosition(i)).equals(item.getData().getTipoLocal().getIv())) {
+                        Locais.setSelection(i, true);
+                        break;
+                    }
                 }
             }
         }

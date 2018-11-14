@@ -14,6 +14,7 @@ public class LocationIV {
     }
 
     public void setLatitude(Double latitude) {
+
         this.latitude = latitude;
     }
 
@@ -22,6 +23,8 @@ public class LocationIV {
     }
 
     public void setLongitude(Double longitude) {
+
         this.longitude = longitude;
     }
+
 }

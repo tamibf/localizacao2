@@ -7,7 +7,7 @@ public class Localizacao implements Serializable
     private StringValue nomLocal;
     private StringValue enderecoLocal;
     private StringValue telLocal;
-    private LocationIV posicao;
+    private LocationValue posicao;
     private StringValue tipoLocal;
     private StringValue descLocal;
 
@@ -35,11 +35,11 @@ public class Localizacao implements Serializable
         this.telLocal = telLocal;
     }
 
-    public LocationIV getPosicao() {
+    public LocationValue getPosicao() {
         return posicao;
     }
 
-    public void setPosicao(LocationIV posicao) {
+    public void setPosicao(LocationValue posicao) {
         this.posicao = posicao;
     }
 
