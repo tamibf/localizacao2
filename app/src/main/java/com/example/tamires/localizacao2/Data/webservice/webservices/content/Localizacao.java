@@ -11,6 +11,15 @@ public class Localizacao implements Serializable
     private StringValue tipoLocal;
     private StringValue descLocal;
 
+    public Localizacao() {
+        this.nomLocal = nomLocal;
+        this.enderecoLocal = enderecoLocal;
+        this.telLocal = telLocal;
+        this.posicao = posicao;
+        this.tipoLocal = tipoLocal;
+        this.descLocal = descLocal;
+    }
+
     public StringValue getNomLocal() {
         return nomLocal;
     }

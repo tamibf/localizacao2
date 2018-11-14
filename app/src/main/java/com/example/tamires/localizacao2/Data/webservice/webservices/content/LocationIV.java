@@ -4,25 +4,25 @@ public class LocationIV {
     private double latitude;
     private  double longitude;
 
-    public LocationIV(Double latitude, Double longitude) {
+    public LocationIV(double latitude, double longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
     }
 
-    public Double getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(Double latitude) {
+    public void setLatitude(double latitude) {
 
         this.latitude = latitude;
     }
 
-    public Double getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(Double longitude) {
+    public void setLongitude(double longitude) {
 
         this.longitude = longitude;
     }

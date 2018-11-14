@@ -61,14 +61,19 @@ public class CadastroActivity extends AppCompatActivity
     {
         xxNome = findViewById(R.id.xxNome);
         edNome = findViewById(R.id.edNome);
+
         xxEndereco = findViewById(R.id.xxEndereco);
         EdEndereco = findViewById(R.id.EdEndereco);
+
         xxTelefone = findViewById(R.id.xxTelefone);
         EdTelefone = findViewById(R.id.EdTelefone);
+
         xxLatitude = findViewById(R.id.xxLatitude);
         EdLatitude = findViewById(R.id.EdLatitude);
+
         xxLongitude = findViewById(R.id.xxLongitude);
         EdLongitude = findViewById(R.id.EdLongitude);
+
         xxDescricao = findViewById(R.id.xxDescricao);
         EdDescricao = findViewById(R.id.EdDescricao);
 
@@ -285,15 +290,16 @@ public class CadastroActivity extends AppCompatActivity
         localizacao.setEnderecoLocal(new StringValue(EdTelefone.getText().toString()));
         localizacao.setEnderecoLocal(new StringValue(EdDescricao.getText().toString()));
         localizacao.setTipoLocal(new StringValue(Locais.getSelectedItem().toString()));
-        LocationValue posicao = new LocationValue();
-        LocationIV locationIV
-                =new LocationIV
-                (
-                        Double.parseDouble(EdLatitude.getText().toString()),
-                         Double.parseDouble(EdLongitude.getText().toString())
-                );
-        posicao.setIv(locationIV);
-        localizacao.setPosicao(posicao);
+        localizacao.setPosicao(new LocationValue(new LocationIV(Double.parseDouble(EdLatitude.getText().toString()), Double.parseDouble(EdLongitude.getText().toString()))));
+//        LocationValue posicao = new LocationValue();
+//        LocationIV locationIV
+//            =new LocationIV
+//            (
+//                    Double.parseDouble(EdLatitude.getText().toString()),
+//                    Double.parseDouble(EdLongitude.getText().toString())
+//            );
+//        posicao.setIv(locationIV);
+//        localizacao.setPosicao(posicao);
         //
         try
         {

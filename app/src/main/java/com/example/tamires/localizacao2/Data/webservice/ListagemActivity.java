@@ -14,9 +14,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.tamires.localizacao2.Data.webservice.webservices.content.Item;
 import com.example.tamires.localizacao2.R;
 import com.example.tamires.localizacao2.Data.webservice.webservices.WebServiceControle;
-import com.example.tamires.localizacao2.Data.webservice.webservices.content.Item;
 import com.example.tamires.localizacao2.Data.webservice.webservices.content.LocalizacoesSquidexInfo;
 
 public class ListagemActivity extends AppCompatActivity
@@ -55,7 +55,7 @@ public class ListagemActivity extends AppCompatActivity
             public void onRefresh()
             {
 
-                carregaListaLocalizacao();
+                    carregaListaLocalizacao();
             }
         });
         //
@@ -91,6 +91,7 @@ public class ListagemActivity extends AppCompatActivity
                                          TextView tvEndereco;
                                          TextView tvTelefone;
                                          TextView Locais;
+                                         TextView tvDescricao;
                                      }
 
                                      @Override
@@ -119,6 +120,7 @@ public class ListagemActivity extends AppCompatActivity
                                              viewHolder.tvEndereco = convertView.findViewById(R.id.tvEndereco);
                                              viewHolder.tvTelefone = convertView.findViewById(R.id.tvTelefone);
                                              viewHolder.Locais = convertView.findViewById(R.id.Locais);
+                                             viewHolder.tvDescricao = convertView.findViewById(R.id.tvDescricao);
                                          }
                                          else
                                              viewHolder = (ViewHolder) convertView.getTag();
@@ -126,7 +128,8 @@ public class ListagemActivity extends AppCompatActivity
                                          viewHolder.tvNome.setText(item.getData().getNomLocal() != null ? item.getData().getNomLocal().getIv() : "");
                                          viewHolder.tvEndereco.setText(item.getData().getEnderecoLocal() != null ? item.getData().getEnderecoLocal().getIv() : "");
                                          viewHolder.tvTelefone.setText(item.getData().getTelLocal() != null ? item.getData().getTelLocal().getIv() : "");
-                                         viewHolder.Locais.setText(item.getData().getDescLocal() != null ? item.getData().getDescLocal().getIv() : "");
+                                         viewHolder.Locais.setText(item.getData().getTipoLocal() != null ? item.getData().getTipoLocal().getIv() : "");
+                                         viewHolder.tvDescricao.setText(item.getData().getDescLocal() != null ? item.getData().getDescLocal().getIv() : "");
                                          //
                                          return convertView;
                                      }
@@ -137,7 +140,8 @@ public class ListagemActivity extends AppCompatActivity
     private void carregaListaLocalizacao()
     {
         srLocalizacao.setRefreshing(true);
-        new WebServiceControle().carregaListaLocalizacoes(this, new WebServiceControle.CarregaListaLocalizacoesListener()        {
+        new WebServiceControle().carregaListaLocalizacoes(this, new WebServiceControle.CarregaListaLocalizacoesListener()
+        {
             @Override
             public void onResultOk(LocalizacoesSquidexInfo localizacoes)
             {
