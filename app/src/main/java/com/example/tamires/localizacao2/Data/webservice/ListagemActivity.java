@@ -58,7 +58,7 @@ public class ListagemActivity extends AppCompatActivity
             public void onRefresh()
             {
 
-                    carregaListaLocalizacao();
+                carregaListaLocalizacao();
             }
         });
         //
