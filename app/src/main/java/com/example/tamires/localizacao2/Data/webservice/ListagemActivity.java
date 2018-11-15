@@ -21,7 +21,8 @@ import com.example.tamires.localizacao2.Data.webservice.webservices.content.Loca
 
 public class ListagemActivity extends AppCompatActivity
 {
-    public static final String EXTRA_REGISTRO = "br.com.datamob.webservice.ListagemActivity.EXTRA_REGISTRO";
+
+    public static final String EXTRA_REGISTRO = "com.example.tamires.localizacao2.Data.webservice.ListagemActivity.EXTRA_REGISTRO";
     private ListView lvLocalizacao;
     private SwipeRefreshLayout srLocalizacao;
     private FloatingActionButton fabConfirmar;

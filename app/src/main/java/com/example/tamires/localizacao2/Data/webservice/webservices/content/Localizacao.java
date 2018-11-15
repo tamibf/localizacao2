@@ -7,7 +7,7 @@ public class Localizacao implements Serializable
     private StringValue nomLocal;
     private StringValue enderecoLocal;
     private StringValue telLocal;
-    private LocationValue posicao;
+    private transient LocationValue posicao;
     private StringValue tipoLocal;
     private StringValue descLocal;
 
