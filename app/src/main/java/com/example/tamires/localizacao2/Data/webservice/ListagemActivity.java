@@ -26,6 +26,7 @@ public class ListagemActivity extends AppCompatActivity
     private ListView lvLocalizacao;
     private SwipeRefreshLayout srLocalizacao;
     private FloatingActionButton fabConfirmar;
+    private FloatingActionButton fabMapa;
     private LocalizacoesSquidexInfo listLocalizacoes;
 
     @Override
@@ -50,6 +51,7 @@ public class ListagemActivity extends AppCompatActivity
         lvLocalizacao = findViewById(R.id.lvLocalizacao);
         srLocalizacao = findViewById(R.id.srLocalizacao);
         fabConfirmar = findViewById(R.id.fabConfirmar);
+        fabMapa = findViewById(R.id.fabMapa);
         srLocalizacao.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
         {
             @Override
@@ -68,6 +70,15 @@ public class ListagemActivity extends AppCompatActivity
                 startActivity(new Intent(ListagemActivity.this, CadastroActivity.class));
             }
         });
+
+        //abrindo activity maps
+        fabMapa.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent it = new Intent(ListagemActivity.this, MapsActivity.class);
+                startActivity(it);
+            }
+        });
+
         //
         lvLocalizacao.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {

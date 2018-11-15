@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Procurando Local:</string>
+    <string name="app_name">Procurando Locais</string>
     <string name="Nome">Digite seu Nome:</string>
     <string name="Endereco">Digite seu endereço:</string>
     <string name="Telefone">Digite o telefone do local:</string>
