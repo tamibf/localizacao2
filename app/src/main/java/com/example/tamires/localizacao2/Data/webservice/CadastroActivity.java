@@ -8,8 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.example.tamires.localizacao2.Data.webservice.webservices.content.LocalizacoesSquidexInfo;
 import com.example.tamires.localizacao2.Data.webservice.webservices.content.LocationIV;
 import com.example.tamires.localizacao2.Data.webservice.webservices.content.LocationValue;
 import com.example.tamires.localizacao2.R;
@@ -20,6 +22,8 @@ import com.example.tamires.localizacao2.Data.webservice.webservices.content.Item
 import com.example.tamires.localizacao2.Data.webservice.webservices.content.StringValue;
 
 import org.json.JSONException;
+
+import java.util.ArrayList;
 
 public class CadastroActivity extends AppCompatActivity
 {
@@ -78,6 +82,7 @@ public class CadastroActivity extends AppCompatActivity
         EdDescricao = findViewById(R.id.EdDescricao);
 
         Locais = findViewById(R.id.Locais);
+
         FloatingActionButton fabConfirmar = findViewById(R.id.fabConfirmar);
         FloatingActionButton fabDeletar = findViewById(R.id.fabDeletar);
         //
@@ -205,6 +210,35 @@ public class CadastroActivity extends AppCompatActivity
                 xxDescricao.setError(null);
             }
         });
+
+        //lista
+
+        new WebServiceControle().carregaListaTipo(this, new WebServiceControle.CarregaTipoListener() {
+
+            @Override
+            public void onResultOk(LocalizacoesSquidexInfo tipos) {
+                Locais = findViewById(R.id.Locais);
+
+                ArrayList<String> arrayList = new ArrayList<String>();
+
+
+                for (int i = 0; i < tipos.getItems().length; i++) {
+                    Item item = tipos.getItems()[i];
+
+                    arrayList.add(item.getData().getNomLocal().getIv());
+                }
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(CadastroActivity.this, android.R.layout.simple_spinner_item, arrayList);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                Locais.setAdapter(adapter);
+            }
+
+            @Override
+            public void onErro() {
+                PopupInformacao.mostraMensagem(CadastroActivity.this, "Falha ao buscar os tipos de locais");
+            }
+        });
+
         //
         fabConfirmar.setOnClickListener(new View.OnClickListener()
         {
@@ -296,7 +330,11 @@ public class CadastroActivity extends AppCompatActivity
 
         localizacao.setTipoLocal(new StringValue(Locais.getSelectedItem().toString()));
 
-        localizacao.setPosicao(new LocationValue(new LocationIV(Double.parseDouble(EdLatitude.getText().toString()), Double.parseDouble(EdLongitude.getText().toString()))));
+//        localizacao.setPosicao(new LocationValue(new LocationIV(Double.parseDouble(EdLatitude.getText().toString()), Double.parseDouble(EdLongitude.getText().toString()))));
+
+        localizacao.setLatitute(new StringValue(EdLatitude.getText().toString()));
+        localizacao.setLongitude(new StringValue(EdLongitude.getText().toString()));
+
 //        LocationValue posicao = new LocationValue();
 //        LocationIV locationIV
 //            =new LocationIV
@@ -362,9 +400,13 @@ public class CadastroActivity extends AppCompatActivity
 
             EdTelefone.setText(item.getData().getTelLocal() != null ?item.getData().getTelLocal().getIv() : "");
 
-            EdLatitude.setText(item.getData().getPosicao() != null ?String.valueOf(item.getData().getPosicao().getIv().getLatitude()) : "");
+//            EdLatitude.setText(item.getData().getPosicao() != null ?String.valueOf(item.getData().getPosicao().getIv().getLatitude()) : "");
+//
+//            EdLongitude.setText(item.getData().getPosicao() != null ?String.valueOf(item.getData().getPosicao().getIv().getLongitude()) : "");
 
-            EdLongitude.setText(item.getData().getPosicao() != null ?String.valueOf(item.getData().getPosicao().getIv().getLongitude()) : "");
+            EdLatitude.setText(item.getData().getLatitute()!= null ?String.valueOf(item.getData().getLatitute().getIv()) : "");
+
+            EdLongitude.setText(item.getData().getLongitude()!= null ?String.valueOf(item.getData().getLongitude().getIv()) : "");
 
             EdDescricao.setText(item.getData().getDescLocal() != null ?item.getData().getDescLocal().getIv() : "");
 

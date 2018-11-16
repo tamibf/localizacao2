@@ -7,6 +7,7 @@
     <string name="TipoLocal">Informe o Tipo de local:</string>
     <string name="Descricao">Informe a descrição do local desejado:</string>
     <string name="OK">OK</string>
+    <string name="FalhaPermissoes">Habilitar permissões para usar app.</string>
 
     <string-array name="estados">
         <item>Tipo de local</item>
@@ -14,9 +15,10 @@
         <item>Lanchonete</item>
         <item>Bar</item>
         <item>Mercado</item>
-        <item>Mercearia</item>
-        <item>Farmácia</item>
+        <item>Casa</item>
         <item>Hospital</item>
+        <item>Farmácia</item>
+        <item>Outros</item>
         <!--<item>ES</item>-->
         <!--<item>GO</item>-->
         <!--<item>MA</item>-->

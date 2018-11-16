@@ -94,6 +94,63 @@ public class WebServiceControle
         }
     }
 
+    public void carregaListaTipo(final Context context
+            , final CarregaTipoListener carregaTipoListener)
+    {
+        if (token == null)
+        {
+            geraToken(context, new GeraTokenListener()
+            {
+                @Override
+                public void onTokenOk()
+                {
+                    carregaListaTipo(context, carregaTipoListener);
+                }
+
+                @Override
+                public void onErro()
+                {
+                    if (carregaTipoListener != null)
+                        carregaTipoListener.onErro();
+                }
+            });
+        }
+        else
+        {
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
+                    "https://cloud.squidex.io/api/content/localizacao/local",
+                    null,
+                    new Response.Listener<JSONObject>()
+                    {
+                        @Override
+                        public void onResponse(JSONObject response)
+                        {
+                            if (carregaTipoListener != null)
+                                carregaTipoListener.onResultOk(new Gson().fromJson(response.toString(), LocalizacoesSquidexInfo.class));
+                        }
+                    },
+                    new Response.ErrorListener()
+                    {
+                        @Override
+                        public void onErrorResponse(VolleyError error)
+                        {
+                            if (carregaTipoListener != null)
+                                carregaTipoListener.onErro();
+                        }
+                    })
+            {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError
+                {
+                    Map<String, String> headers = new HashMap<>();
+                    headers.put("Authorization", token.getToken_type() + " " + token.getAccess_token());
+                    return headers;
+                }
+            };
+            getRequestQueueInstance(context).add(jsonObjectRequest);
+        }
+    }
+
     public void criaLocalizacao(final Context context, final Localizacao localizacao, final UpdateLocalizacaoListener criaLocalizacaoListener) throws JSONException
     {
         if (token == null)
@@ -337,6 +394,13 @@ public class WebServiceControle
     }
 
     public interface CarregaListaLocalizacoesListener
+    {
+        public abstract void onResultOk(LocalizacoesSquidexInfo localizacoes);
+
+        public abstract void onErro();
+    }
+
+    public interface CarregaTipoListener
     {
         public abstract void onResultOk(LocalizacoesSquidexInfo localizacoes);
 
