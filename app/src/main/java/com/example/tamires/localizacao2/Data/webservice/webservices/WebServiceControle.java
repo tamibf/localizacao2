@@ -94,6 +94,7 @@ public class WebServiceControle
         }
     }
 
+
     public void carregaListaTipo(final Context context
             , final CarregaTipoListener carregaTipoListener)
     {
@@ -118,7 +119,7 @@ public class WebServiceControle
         else
         {
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
-                    "https://cloud.squidex.io/api/content/localizacao/local",
+                    "https://cloud.squidex.io/api/content/localizacao/item",
                     null,
                     new Response.Listener<JSONObject>()
                     {

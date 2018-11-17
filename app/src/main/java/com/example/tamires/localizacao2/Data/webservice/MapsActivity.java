@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
+import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -58,6 +60,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Marker myLocation;
     private Polygon mPolygon;
     private Polyline mPolyline;
+
+//    private TextInputLayout xxDescricao;
+//    private TextInputEditText EdDescricao;
     //
     private FusedLocationProviderClient mFusedLocationClient;
     //
@@ -211,6 +216,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         //
         iniciaLeituraGPS();
 
+//        xxDescricao = findViewById(R.id.xxDescricao);
+//        EdDescricao = findViewById(R.id.EdDescricao);
+
 
     }
 
@@ -224,7 +232,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap = googleMap;
         // Configura o tipo do mapa
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-21.1985847, -47.8525957), 11.0f));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-21.204185, -47.600372), 10.0f));
         // Adiciona evento para o click do mapa
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener()
         {
@@ -476,10 +484,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         if (myLocation == null)
         {
             MarkerOptions markerOptions = new MarkerOptions();
-            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
             markerOptions.position(new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude()));
             markerOptions.draggable(false);
             myLocation = mMap.addMarker(markerOptions);
+//            myLocation = mMap.addMarker(new MarkerOptions()
+//                            .title(listMarker.toString()));
+
         }
         else
             myLocation.setPosition(new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude()));
