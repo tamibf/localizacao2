@@ -299,11 +299,11 @@ public class CadastroActivity extends AppCompatActivity
             retorno = false;
         }
         //
-        if (Locais.getSelectedItemPosition() <= 0)
-        {
-            PopupInformacao.mostraMensagem(this, "Selecione o tipo de local");
-            retorno = false;
-        }
+//        if (Locais.getSelectedItemPosition() <= 0)
+//        {
+//            PopupInformacao.mostraMensagem(this, "Selecione o tipo de local");
+//            retorno = false;
+//        }
 
         return retorno;
     }

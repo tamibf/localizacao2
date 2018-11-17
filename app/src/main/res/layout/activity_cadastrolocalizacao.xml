@@ -118,7 +118,6 @@
                 android:id="@+id/Locais"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:entries="@array/estados"
                 android:prompt="@string/TipoLocal" />
 
         </LinearLayout>
