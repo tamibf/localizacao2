@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
@@ -229,7 +230,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void adicionaMarcador(LatLng position, String title, String telefone)
     {
         MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+//        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.pin));
         markerOptions.position(position);
         markerOptions.draggable(false);
         markerOptions.title(title);
@@ -286,7 +288,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         if (myLocation == null)
         {
             MarkerOptions markerOptions = new MarkerOptions();
-            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
             markerOptions.position(new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude()));
             markerOptions.draggable(false);
             myLocation = mMap.addMarker(markerOptions);
