@@ -48,6 +48,7 @@ public class CadastroActivity extends AppCompatActivity
     private Spinner Locais;
     //
     private Item item;
+    final ArrayList<String> arrayTipos = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -213,31 +214,6 @@ public class CadastroActivity extends AppCompatActivity
 
         //lista
 
-        new WebServiceControle().carregaListaTipo(this, new WebServiceControle.CarregaTipoListener() {
-
-            @Override
-            public void onResultOk(LocalizacoesSquidexInfo tipos) {
-                Locais = findViewById(R.id.Locais);
-
-                ArrayList<String> arrayList = new ArrayList<String>();
-
-
-                for (int i = 0; i < tipos.getItems().length; i++) {
-                    Item item = tipos.getItems()[i];
-
-                    arrayList.add(item.getData().getNomLocal().getIv());
-                }
-
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(CadastroActivity.this, android.R.layout.simple_spinner_item, arrayList);
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                Locais.setAdapter(adapter);
-            }
-
-            @Override
-            public void onErro() {
-                PopupInformacao.mostraMensagem(CadastroActivity.this, "Falha ao buscar os tipos de locais");
-            }
-        });
 
         //
         fabConfirmar.setOnClickListener(new View.OnClickListener()
@@ -390,36 +366,62 @@ public class CadastroActivity extends AppCompatActivity
 
     }
 
+
     private void carregaValores()
     {
-        if(item != null)
-        {
-            edNome.setText(item.getData().getNomLocal() != null ? item.getData().getNomLocal().getIv() : "");
 
-            EdEndereco.setText(item.getData().getEnderecoLocal() != null ?item.getData().getEnderecoLocal().getIv() : "");
+        new WebServiceControle().carregaListaTipo(this, new WebServiceControle.CarregaTipoListener() {
 
-            EdTelefone.setText(item.getData().getTelLocal() != null ?item.getData().getTelLocal().getIv() : "");
+            @Override
+            public void onResultOk(LocalizacoesSquidexInfo tipos) {
+                Locais = findViewById(R.id.Locais);
 
-//            EdLatitude.setText(item.getData().getPosicao() != null ?String.valueOf(item.getData().getPosicao().getIv().getLatitude()) : "");
-//
-//            EdLongitude.setText(item.getData().getPosicao() != null ?String.valueOf(item.getData().getPosicao().getIv().getLongitude()) : "");
+                ArrayList<String> arrayList = new ArrayList<String>();
 
-            EdLatitude.setText(item.getData().getLatitute()!= null ?String.valueOf(item.getData().getLatitute().getIv()) : "");
 
-            EdLongitude.setText(item.getData().getLongitude()!= null ?String.valueOf(item.getData().getLongitude().getIv()) : "");
+                for (int i = 0; i < tipos.getItems().length; i++) {
+                    Item item = tipos.getItems()[i];
 
-            EdDescricao.setText(item.getData().getDescLocal() != null ?item.getData().getDescLocal().getIv() : "");
+                    arrayList.add(item.getData().getNomLocal().getIv());
+                }
 
-            if(item.getData().getTipoLocal() != null)
-            {
-                for (int i = 1; i < Locais.getCount(); i++) {
-                    if (((String) Locais.getItemAtPosition(i)).equals(item.getData().getTipoLocal().getIv())) {
-                        Locais.setSelection(i, true);
-                        break;
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(CadastroActivity.this, android.R.layout.simple_spinner_item, arrayList);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                Locais.setAdapter(adapter);
+
+                if(item != null)
+                {
+                    edNome.setText(item.getData().getNomLocal() != null ? item.getData().getNomLocal().getIv() : "");
+
+                    EdEndereco.setText(item.getData().getEnderecoLocal() != null ?item.getData().getEnderecoLocal().getIv() : "");
+
+                    EdTelefone.setText(item.getData().getTelLocal() != null ?item.getData().getTelLocal().getIv() : "");
+
+                    EdLatitude.setText(item.getData().getLatitute()!= null ?String.valueOf(item.getData().getLatitute().getIv()) : "");
+
+                    EdLongitude.setText(item.getData().getLongitude()!= null ?String.valueOf(item.getData().getLongitude().getIv()) : "");
+
+                    EdDescricao.setText(item.getData().getDescLocal() != null ?item.getData().getDescLocal().getIv() : "");
+
+                    if(item.getData().getTipoLocal() != null)
+                    {
+                        for (int i = 1; i < Locais.getCount(); i++) {
+                            if (((String) Locais.getItemAtPosition(i)).equals(item.getData().getTipoLocal().getIv())) {
+                                Locais.setSelection(i, true);
+                                break;
+                            }
+                        }
+
                     }
                 }
             }
-        }
+
+            @Override
+            public void onErro() {
+                PopupInformacao.mostraMensagem(CadastroActivity.this, "Falha ao buscar os tipos de locais");
+            }
+        });
+
     }
 
     private void deletaRegistro()

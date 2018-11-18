@@ -48,8 +48,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private GoogleMap mMap;
     private Context context = MapsActivity.this;
-    //
-//    private Button Add;
 
     private AppCompatTextView tvDistancia;
     private AppCompatTextView tvArea;
@@ -61,39 +59,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Polygon mPolygon;
     private Polyline mPolyline;
 
-//    private TextInputLayout xxDescricao;
-//    private TextInputEditText EdDescricao;
-    //
+    public static final String LATITUDE = "com.example.tamires.localizacao2.Data.webservice.MapsActivity.LATITUDE";
+    public static final String LONGITUDE = "ccom.example.tamires.localizacao2.Data.webservice.MapsActivity.LONGITUDE";
+
+
     private FusedLocationProviderClient mFusedLocationClient;
     //
     private static final int REQUEST_PERMISSOES = 1;
-
-//    //Tudo que eu havia feito
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_maps);
-//        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-//        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-//                .findFragmentById(R.id.map);
-//        mapFragment.getMapAsync(this);
-//    }
-//
-//    @Override
-//    public void onMapReady(GoogleMap googleMap) {
-//        mMap = googleMap;
-//
-//        // Add a marker in Sydney and move the camera
-//        LatLng Casa = new LatLng(-21.204185, -47.600372);
-//
-//        mMap.addMarker(
-//                new MarkerOptions()
-//                        .position(Casa)
-//                        .title("Minha casa")
-//                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
-//        );
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(Casa));
-//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -115,7 +87,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         Item item = localizacoes.getItems()[i];
                         LatLng position = new LatLng(Double.parseDouble(item.getData().getLatitute().getIv()), Double.parseDouble(item.getData().getLongitude().getIv()));
 
-                        adicionaMarcador(position);
+                        adicionaMarcador(position, item.getData().getNomLocal().getIv(), item.getData().getTelLocal().getIv());
                     }
                 }
                 @Override
@@ -125,14 +97,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             });
         }
 
-//        Add = findViewById(R.id.Add);
-//
-//        Add.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(MapsActivity.this, ListagemActivity.class));
-//            }
-//        });
     }
 
     private boolean verificaPermissoesNecessarias()
@@ -216,10 +180,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         //
         iniciaLeituraGPS();
 
-//        xxDescricao = findViewById(R.id.xxDescricao);
-//        EdDescricao = findViewById(R.id.EdDescricao);
-
-
     }
 
     /**
@@ -233,19 +193,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         // Configura o tipo do mapa
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-21.204185, -47.600372), 10.0f));
-        // Adiciona evento para o click do mapa
-        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener()
-        {
-            @Override
-            public void onMapClick(LatLng position)
-            {
-                // A cada click um marcador é adicionado e é refeito o controle dos tipos de objetos exibidos e também dos calculos
-                listPontos.add(position);
-                adicionaMarcador(position);
-                controlaObjeto();
-                calculaMedidas();
-            }
-        });
+
         // Adiciona evento para o click nos marcadores
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener()
         {
@@ -256,32 +204,20 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 if (marker.equals(myLocation))
                     return true;
                 // Se não for, remover o marcador e refaz os calculos
-                removeMarker(marker);
-                calculaMedidas();
+//                removeMarker(marker);
+//                calculaMedidas();
                 return true;
             }
         });
-        // Adiciona evento para o click nos polígonos
-        mMap.setOnPolygonClickListener(new GoogleMap.OnPolygonClickListener()
+
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener()
         {
             @Override
-            public void onPolygonClick(Polygon polygon)
+            public boolean onMarkerClick(Marker marker)
             {
-                // Quando clicado, o poligono é removido
-                removePolygon();
-            }
+                marker.showInfoWindow();
 
-
-        });
-
-        // Adiciona evento para o click na linhas
-        mMap.setOnPolylineClickListener(new GoogleMap.OnPolylineClickListener()
-        {
-            @Override
-            public void onPolylineClick(Polyline polyline)
-            {
-                //Quando clicada a linha é removida
-                removePolyline();
+                return true;
             }
         });
     }
@@ -290,150 +226,16 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
      * Cria o marcador para a posição.
      * @param position
      */
-    private void adicionaMarcador(LatLng position)
+    private void adicionaMarcador(LatLng position, String title, String telefone)
     {
         MarkerOptions markerOptions = new MarkerOptions();
-        //Seta um ícone
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-        //Seta a posição
         markerOptions.position(position);
-        //Seta se o marcador pode ser arrastado
         markerOptions.draggable(false);
-        //Adiciona um novo marcador no mapa
+        markerOptions.title(title);
+        markerOptions.snippet(telefone);
         Marker marker = mMap.addMarker(markerOptions);
         listMarker.add(marker);
-    }
-
-    /**
-     * Cria os objetos no mapa. Se possui 2 pontos, cria-se panes uma linha. Se possuir mais de 2 pontos, cria0-se um poligono
-     */
-    private void controlaObjeto()
-    {
-        if (listMarker.size() > 2)
-        {
-            if (mPolyline != null)
-            {
-                mPolyline.remove();
-                mPolyline = null;
-            }
-            //
-            if (mPolygon == null)
-            {
-                PolygonOptions polygonOptions = new PolygonOptions();
-                //Adiciona todos os pontos ao poligono
-                polygonOptions.addAll(listPontos);
-                //Define a cor da linha
-                polygonOptions.strokeColor(Color.BLACK);
-                //Define a cor de preenchimento
-                polygonOptions.fillColor(Color.WHITE);
-                // Define a espessura
-                polygonOptions.strokeWidth(3);
-                // Define se é clicavel
-                polygonOptions.clickable(true);
-                mPolygon = mMap.addPolygon(polygonOptions);
-            }
-            else
-            {
-                mPolygon.setPoints(listPontos);
-            }
-        }
-        else if (listMarker.size() == 2)
-        {
-            if (mPolygon != null)
-            {
-                mPolygon.remove();
-                mPolygon = null;
-            }
-            //
-            PolylineOptions polylineOptions = new PolylineOptions();
-            //Adiciona todos os pontos ao poligono
-            polylineOptions.addAll(listPontos);
-            //Define a cor da linha
-            polylineOptions.color(Color.BLACK);
-            // Define a espessura
-            polylineOptions.width(3);
-            // Define se é clicavel
-            polylineOptions.clickable(true);
-            mPolyline = mMap.addPolyline(polylineOptions);
-        }
-        else if (listMarker.size() == 1)
-        {
-            if (mPolyline != null)
-            {
-                mPolyline.remove();
-                mPolyline = null;
-            }
-        }
-    }
-
-    private void removePolyline()
-    {
-        // Remove linha
-        mPolyline.remove();
-        mPolyline = null;
-        limpaMarcadores();
-        calculaMedidas();
-    }
-
-    private void removePolygon()
-    {
-        //Remove poligono
-        mPolygon.remove();
-        mPolygon = null;
-        limpaMarcadores();
-        calculaMedidas();
-    }
-
-    private void limpaMarcadores()
-    {
-        //Remove marcadores
-        for (Marker marker : listMarker)
-        {
-            marker.remove();
-        }
-        listMarker.clear();
-        listPontos.clear();
-    }
-
-    private void removeMarker(Marker marker)
-    {
-        marker.remove();
-        listPontos.remove(listMarker.indexOf(marker));
-        listMarker.remove(marker);
-        controlaObjeto();
-    }
-
-    private void calculaMedidas()
-    {
-        /**
-         * Calcula distancia de todos os pontos e soma
-         */
-        double distancia = 0.0;
-        if (listMarker.size() > 1)
-        {
-            Marker markerAnterior = null;
-            for (Marker marker : listMarker)
-            {
-                float[] retorno = new float[1];
-                if (markerAnterior != null)
-                    Location.distanceBetween(marker.getPosition().latitude, marker.getPosition().longitude, markerAnterior.getPosition().latitude, markerAnterior.getPosition().longitude, retorno);
-                distancia += retorno[0];
-                markerAnterior = marker;
-            }
-        }
-        if (distancia > 0)
-            tvDistancia.setText("Distância: " + String.valueOf(distancia) + "m");
-        else
-            tvDistancia.setText("");
-        //
-        /**
-         * Calcula área do polígono
-         */
-        double area = SphericalUtil.computeArea(listPontos);
-        if (area > 0)
-            tvArea.setText("Área: " + String.valueOf(area) + "m2");
-        else
-            tvArea.setText("");
     }
 
     /**
@@ -488,8 +290,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             markerOptions.position(new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude()));
             markerOptions.draggable(false);
             myLocation = mMap.addMarker(markerOptions);
-//            myLocation = mMap.addMarker(new MarkerOptions()
-//                            .title(listMarker.toString()));
 
         }
         else
