@@ -47,7 +47,10 @@ import java.util.ArrayList;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
+    //criação da instância do googgle maps
     private GoogleMap mMap;
+
+    //contexto da app
     private Context context = MapsActivity.this;
 
     private AppCompatTextView tvDistancia;
@@ -68,14 +71,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     //
     private static final int REQUEST_PERMISSOES = 1;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        //
-        /**
-         * Só configura a tela se possuir as permissões
-         */
+
+        //verifica se há permissão e assim configura a tela para inicio da aplicação
         if (verificaPermissoesNecessarias())
         {
             iniciaAplicacao();
@@ -102,9 +105,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private boolean verificaPermissoesNecessarias()
     {
-        /**
-         * Verifica se o app tem as permissões necessárias para utilizar o sistema
-         */
+        //método verifica se o app possui as permissões necessárias
         ArrayList<String> permissoesNecessarias = new ArrayList<>();
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
             permissoesNecessarias.add(Manifest.permission.ACCESS_FINE_LOCATION);
@@ -127,37 +128,25 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
-    /**
-     * Método disparado após solicitar permissões. Funcionamento pareceido com o OnActivityResult
-     * @param requestCode
-     * @param permissions
-     * @param grantResults
-     */
+    //método que 'solicita' permissões para usar app, pareceido com o OnActivityResult
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
     {
         switch (requestCode)
         {
             case REQUEST_PERMISSOES:
-                /**
-                 * Verifica se todas as permissões foram autorizadas
-                 */
+                //verificação das permissões necessárias
                 for (int result : grantResults)
                 {
                     if (result != PackageManager.PERMISSION_GRANTED)
                     {
-                        /**
-                         * Se alguma permissão não foi autorizada, avisa o usuário e fecha a tela
-                         */
+                        // faltou atribuição de permissões ele
                         Toast.makeText(context, R.string.FalhaPermissoes, Toast.LENGTH_LONG).show();
                         finish();
                         return;
                     }
                 }
-                //
-                /**
-                 * Se todas as permissões foram dadas, continuar normalmente
-                 */
+                //se deu certo ele sai desse método e inicia a app
                 iniciaAplicacao();
                 break;
         }
@@ -166,10 +155,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void iniciaAplicacao()
     {
         setContentView(R.layout.activity_maps);
-        //
-        /**
-         * Inicia referência para o mapa
-         */
+
+        //referência para o maps
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mMap);
         if (mapFragment != null)
         {
@@ -180,22 +167,18 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         tvDistancia = findViewById(R.id.tvDistancia);
         //
         iniciaLeituraGPS();
-
     }
 
-    /**
-     * Método disparado quando o mapa está pronto para ser utilizado
-     * @param googleMap
-     */
+    //acionado quando o mapa está pronto pra uso
     @Override
     public void onMapReady(GoogleMap googleMap)
     {
         mMap = googleMap;
-        // Configura o tipo do mapa
+        // tipo de mapa
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        // foco da câmera
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-21.204185, -47.600372), 10.0f));
-
-        // Adiciona evento para o click nos marcadores
+        // evento pra clicar nos marcadores
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener()
         {
             @Override
@@ -204,9 +187,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 //Verifica se é o marcador de posição e se for não faz nada
                 if (marker.equals(myLocation))
                     return true;
-                // Se não for, remover o marcador e refaz os calculos
-//                removeMarker(marker);
-//                calculaMedidas();
+                //caso false ele refaz os cálculos para o mapa
                 return true;
             }
         });
@@ -216,6 +197,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public boolean onMarkerClick(Marker marker)
             {
+                //mostra janela de inf
                 marker.showInfoWindow();
 
                 return true;
@@ -223,15 +205,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
     }
 
-    /**
-     * Cria o marcador para a posição.
-     * @param position
-     */
+    //add - cria marker (marcador)
     private void adicionaMarcador(LatLng position, String title, String telefone)
     {
         MarkerOptions markerOptions = new MarkerOptions();
-//        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.pin));
+        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.position));
         markerOptions.position(position);
         markerOptions.draggable(false);
         markerOptions.title(title);
@@ -257,9 +235,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void iniciaLeituraGPS()
     {
-        /**
-         * Configura a solicitação
-         */
+        //configura chamada para o maps
         LocationRequest mLocationRequest = new LocationRequest();
         // Intervalo mínimo de 1000 milisegundo para a solicitação explícita
         mLocationRequest.setInterval(1000);
@@ -272,23 +248,18 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         // Confirma se o app possui as permissões necessárias
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
             return;
-        //
         // Registra a solicitação passando as configurações e o responsável por receber as informações atualizadas
         mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, null);
     }
 
 
-    /**
-     * Cria um marcador para representar a posição atual
-     * Só cria se já não existir, caso contrário, apenas atualiza posição do marcador
-     * @param lastLocation
-     */
+    //Marcador na posição atual é atualizado ou criado se não existir,
     private void atualizaMeuLocal(Location lastLocation)
     {
         if (myLocation == null)
         {
             MarkerOptions markerOptions = new MarkerOptions();
-            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
+            markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.alvo));
             markerOptions.position(new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude()));
             markerOptions.draggable(false);
             myLocation = mMap.addMarker(markerOptions);

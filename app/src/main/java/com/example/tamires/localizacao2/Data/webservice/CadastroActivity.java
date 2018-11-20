@@ -1,5 +1,8 @@
 package com.example.tamires.localizacao2.Data.webservice;
 
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputEditText;
@@ -85,8 +88,9 @@ public class CadastroActivity extends AppCompatActivity
         Locais = findViewById(R.id.Locais);
 
         FloatingActionButton fabConfirmar = findViewById(R.id.fabConfirmar);
+
         FloatingActionButton fabDeletar = findViewById(R.id.fabDeletar);
-        //
+
         edNome.addTextChangedListener(new TextWatcher()
         {
             @Override
@@ -311,16 +315,6 @@ public class CadastroActivity extends AppCompatActivity
         localizacao.setLatitute(new StringValue(EdLatitude.getText().toString()));
         localizacao.setLongitude(new StringValue(EdLongitude.getText().toString()));
 
-//        LocationValue posicao = new LocationValue();
-//        LocationIV locationIV
-//            =new LocationIV
-//            (
-//                    Double.parseDouble(EdLatitude.getText().toString()),
-//                    Double.parseDouble(EdLongitude.getText().toString())
-//            );
-//        posicao.setIv(locationIV);
-//        localizacao.setPosicao(posicao);
-        //
         try
         {
             if(item == null)

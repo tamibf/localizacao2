@@ -133,6 +133,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:tint="@android:color/white"
+        app:backgroundTint="@color/Verde"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:srcCompat="@drawable/ic_check_black" />
@@ -143,6 +144,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:tint="@android:color/white"
+        app:backgroundTint="@android:color/holo_red_dark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toLeftOf="@id/fabConfirmar"
         app:srcCompat="@drawable/ic_delete_forever_black" />
